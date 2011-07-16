@@ -357,30 +357,6 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
-/*
-User added config options
-*/
-
-$config['site_name'] = 'portal';
-$config['site_open'] = TRUE;
-$config['app_version'] = '0.6&#120572;'; // &#120573; -- beta
-$config['root'] = $_SERVER['DOCUMENT_ROOT'];
-$config['javascript_location'] = $config['base_url'] . 'js/jquery-1.5.2.min.js';
-$config['javascript_ajax_img'] = $config['base_url'] . 'img/ajax-loader.gif';
-
-/* Set correct timezone, otherwise date helper is fucked. */
-date_default_timezone_set('Europe/Tallinn');
-
-/*
-|------------------------------------------------------------------------------
-| Native Auto-load
-|------------------------------------------------------------------------------
-|
-| Nothing to do with config/autoload.php, this allows php autoload to work for
-| base controllers and some third-party libraries.
-|
-*/
-
 function __autoload($class)
 {
     if(strpos($class, 'CI_') !== 0)
@@ -388,7 +364,6 @@ function __autoload($class)
         @include_once( APPPATH . 'core/' . $class . EXT);
     }
 }
-
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

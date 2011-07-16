@@ -38,10 +38,10 @@ CREATE TABLE IF NOT EXISTS `anonymous` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `anonymous_to_posts`
+-- Table structure for table `anonymous_to_post`
 --
 
-CREATE TABLE IF NOT EXISTS `anonymous_to_posts` (
+CREATE TABLE IF NOT EXISTS `anonymous_to_post` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `anonymous_id` int(11) unsigned NOT NULL,
   `post_id` int(11) unsigned NOT NULL,
@@ -51,10 +51,10 @@ CREATE TABLE IF NOT EXISTS `anonymous_to_posts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `anonymous_to_stories`
+-- Table structure for table `anonymous_to_story`
 --
 
-CREATE TABLE IF NOT EXISTS `anonymous_to_stories` (
+CREATE TABLE IF NOT EXISTS `anonymous_to_story` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `anonymous_id` int(11) unsigned NOT NULL,
   `story_id` int(11) unsigned NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `news` (
   `news_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `content` tinytext COLLATE utf8_unicode_ci NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `approved` tinyint(1) NOT NULL DEFAULT '1',
   `added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`news_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -79,10 +79,10 @@ CREATE TABLE IF NOT EXISTS `news` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Table structure for table `post`
 --
 
-CREATE TABLE IF NOT EXISTS `posts` (
+CREATE TABLE IF NOT EXISTS `post` (
   `post_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `content` mediumtext NOT NULL,
   `approved` tinyint(1) unsigned NOT NULL DEFAULT '3',
@@ -93,10 +93,10 @@ CREATE TABLE IF NOT EXISTS `posts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stories`
+-- Table structure for table `story`
 --
 
-CREATE TABLE IF NOT EXISTS `stories` (
+CREATE TABLE IF NOT EXISTS `story` (
   `story_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(64) DEFAULT NULL,
   `content` text NOT NULL,
@@ -108,10 +108,10 @@ CREATE TABLE IF NOT EXISTS `stories` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE IF NOT EXISTS `user` (
   `user_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL,
@@ -123,10 +123,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_to_news`
+-- Table structure for table `user_to_news`
 --
 
-CREATE TABLE IF NOT EXISTS `users_to_news` (
+CREATE TABLE IF NOT EXISTS `user_to_news` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `news_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -137,10 +137,10 @@ CREATE TABLE IF NOT EXISTS `users_to_news` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_to_posts`
+-- Table structure for table `user_to_post`
 --
 
-CREATE TABLE IF NOT EXISTS `users_to_secrets` (
+CREATE TABLE IF NOT EXISTS `user_to_post` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `post_id` int(11) unsigned NOT NULL,
@@ -150,10 +150,10 @@ CREATE TABLE IF NOT EXISTS `users_to_secrets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users_to_stories`
+-- Table structure for table `user_to_story`
 --
 
-CREATE TABLE IF NOT EXISTS `users_to_stories` (
+CREATE TABLE IF NOT EXISTS `user_to_story` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `story_id` int(11) unsigned NOT NULL,

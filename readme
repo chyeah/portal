@@ -7,6 +7,14 @@
 * Portal should now work, register a user and start using.
 ** Note: in database you must set permission to 10 to make your user to admin. You must logout and log back in before changes take effect.
 
-Not yet stable. I wouldn't use it on live site just yet.
+Far from stable!
+
+Developed using Codeigniter v2.0.2
+
+== To Do ==
+* Style changes.
+* Proper admin panel.
+* Cache.
+* Proper error pages.
 
 Developed by Kristian Saarela.
