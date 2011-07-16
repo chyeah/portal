@@ -1,0 +1,69 @@
+<?php
+
+$this->load->view('admin/header');
+
+foreach($records as $row):
+    echo "<li>
+    <h2 class=\"title\" id=\"" . $row->id . "\">" . $row->title . "</h2>
+    <div class=\"story\" id=\"" . $row->id . "\">"
+    
+    . nl2br($row->content) .
+    
+    "</div>
+    <p>Told by "
+    
+    . anchor_popup('user/profile/' . $row->user_id . '/' . $row->username, $row->username) .
+    
+    " at " . $row->added . " (" . timespan(human_to_unix($row->added), now()) . " ago)
+        <span>"
+        
+        . anchor('admin/i_approve/story/' . $row->id, img('img/round_checkmark.png'))
+        . anchor('admin/i_disapprove/story/' . $row->id, img('img/round_minus.png'))
+        . anchor('admin/later/story/' . $row->id, img('img/round_delete.png')) .
+        
+        "</span>
+    </p>
+    </li>";
+endforeach;
+?>
+
+<script>
+    $(document).ready(function() {
+        var csrf_token_hash = $.cookie('ci_csrf_token');
+        $('.title').editable('<?php echo site_url('admin/edit_title'); ?>',{event:'dblclick',submit:'OK',cancel:'Cancel',id:'id',name:'title',submitdata:{'ci_csrf_token':csrf_token_hash}});
+        $('.story').editable('<?php echo site_url('admin/edit_story'); ?>',{type:'textarea',event:'dblclick',submit:'OK',cancel:'Cancel',id:'id',name:'content', submitdata:{'ci_csrf_token':csrf_token_hash},data:function(value,settings){var retval=value.replace(/<br[\s\/]?>/gi, '\n');return retval;}});
+        
+        $("#contents ul li").mouseover(function() {
+            $(this).find("span").show();
+        }).mouseout(function() {
+            $(this).find("span").hide();
+        });
+        
+        $("#contents ul li p span a").click(function(e) {
+            e.preventDefault();
+            var a = $(this);
+            var linkk = a.attr('href');
+            
+            $.ajax({
+                url: linkk,
+                success: function(data) {
+                    if(data == 'true')
+                    {
+                        a.closest("li").slideUp("fast");
+                    }
+                    if(data == 'empty')
+                    {
+                        a.closest("li").empty().append("<div>That's all :)</div>");
+                        
+                    }
+                }
+            });
+        });
+    });
+    </script>
+
+<?php
+
+$this->load->view('footer');
+
+?>
