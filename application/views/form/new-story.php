@@ -5,7 +5,7 @@
 <?php
 echo $errors;
 
-echo form_open('post/story');
+echo form_open('add/story');
 echo (isset($name)) ? '<p>' . $name . '</p>' : '';
 echo '<p>' . $story_title . '</p>';
 echo '<p>' . $content . '</p>';

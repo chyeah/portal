@@ -31,11 +31,7 @@ class Add extends Public_Controller
         {
             $this->load->model('content');
             
-            $dat['username'] = $this->input->post('name');
-            $dat['email']    = $this->input->post('email');
-            $dat['content']  = $this->input->post('content');
-            
-            if($this->content->add(true, $dat))
+            if($this->content->add_post($this->input->post('content')))
             {
                 $this->session->set_flashdata('success', 'Post added.');
                 redirect('show/posts', 'location');
@@ -70,12 +66,7 @@ class Add extends Public_Controller
         {
             $this->load->model('content');
             
-            $dat['username'] = $this->input->post('name');
-            $dat['email']    = $this->input->post('email');
-            $dat['content']  = $this->input->post('content');
-            $dat['title']    = $this->input->post('title');
-            
-            if($this->content->add(false, $dat))
+            if($this->content->add_story($this->input->post('title'), $this->input->post('content')))
             {
                 $this->session->set_flashdata('success', 'Story added.');
                 redirect('show/posts', 'location');

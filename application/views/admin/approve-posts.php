@@ -41,13 +41,13 @@ endforeach;
             }
         });
         
-        $("#contents ul li").mouseover(function() {
+        /*$("#content article").mouseover(function() {
             $(this).find("span").show();
         }).mouseout(function() {
             $(this).find("span").hide();
-        });
+        });*/
         
-        $("#contents ul li p span a").click(function(e) {
+        $("#content article details span a").click(function(e) {
             e.preventDefault();
             var a = $(this);
             var linkk = a.attr('href');
@@ -57,11 +57,11 @@ endforeach;
                 success: function(data) {
                     if(data == 'true')
                     {
-                        a.closest("li").slideUp("fast");
+                        a.closest("article").slideUp("fast");
                     }
                     if(data == 'empty')
                     {
-                        a.closest("li").empty().append("<div>That's all :)</div>");
+                        a.closest("article").empty().append("<article>That's all :)</article>");
                         
                     }
                 }

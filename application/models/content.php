@@ -251,14 +251,18 @@ class Content extends CI_Model
         $this->db->trans_start();
         $story_id = $this->add_story_news('story', $title, $content);
         
-        if($this->auth_model->is_logged_in())
+        if($this->auth->is_logged_in())
         {
-            $this->db->insert('user_to_story', array('story_id' => $post_id, 'user_id' => $this->session->userdata('user_id')));
+            $this->db->insert('user_to_story', array('story_id' => $story_id, 'user_id' => $this->session->userdata('user_id')));
         }
         else
         {
+            $this->load->library('user_agent');
+            $this->db->insert('anonymous', array('username' => $this->input->post('name'), 'email' => $this->input->post('email'), 'ip' => $this->input->ip_address(), 'user_agent' => $this->agent->browser()));
+            $anonymous_id = $this->db->insert_id();
+            
             //TODO: check anonymous using auth model or something.
-            $this->db->insert('anonymous_to_story', array('story_id' => $post_id, 'anonymous_id' => 1));
+            $this->db->insert('anonymous_to_story', array('story_id' => $story_id, 'anonymous_id' => $anonymous_id));
         }
         
         if($this->db->trans_complete()) return true;
@@ -276,14 +280,18 @@ class Content extends CI_Model
         $this->db->trans_start();
         $post_id = $this->_add_post($content);
         
-        if($this->auth_model->is_logged_in())
+        if($this->auth->is_logged_in())
         {
             $this->db->insert('user_to_post', array('post_id' => $post_id, 'user_id' => $this->session->userdata('user_id')));
         }
         else
         {
+            $this->load->library('user_agent');
+            $this->db->insert('anonymous', array('username' => $this->input->post('name'), 'email' => $this->input->post('email'), 'ip' => $this->input->ip_address(), 'user_agent' => $this->agent->browser()));
+            $anonymous_id = $this->db->insert_id();
+            
             //TODO: check anonymous using auth model or something.
-            $this->db->insert('anonymous_to_post', array('post_id' => $post_id, 'anonymous_id' => 1));
+            $this->db->insert('anonymous_to_post', array('post_id' => $post_id, 'anonymous_id' => $anonymous_id));
         }
         
         if($this->db->trans_complete()) return true;
@@ -325,7 +333,7 @@ class Content extends CI_Model
      */
     public function edit_post($id, $content)
     {
-        $this->db->where('id', $id);
+        $this->db->where('post_id', $id);
         
         if($this->db->update('post', array('content' => $content))) return true;
         else return false;
@@ -377,7 +385,7 @@ class Content extends CI_Model
      */
     public function edit_story_title($id, $title)
     {
-        return $this->edit('post', $id, array('title' => $title));
+        return $this->edit('story', $id, array('title' => $title));
     }
     
     /**
@@ -389,7 +397,7 @@ class Content extends CI_Model
      */
     public function edit_story_content($id, $content)
     {
-        return $this->edit('post', $id, array('content' => $content));
+        return $this->edit('story', $id, array('content' => $content));
     }
     
     /**
@@ -402,7 +410,7 @@ class Content extends CI_Model
      */
     public function edit_story($id, $title, $content)
     {
-        return $this->edit('post', $id, array('title' => $title, 'content' => $content));
+        return $this->edit('story', $id, array('title' => $title, 'content' => $content));
     }
     
     /**
@@ -415,9 +423,19 @@ class Content extends CI_Model
      */
     private function edit($what, $id, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where($what . '_id', $id);
         
         if($this->db->update($what, $data)) return true;
         else return false;
+    }
+    
+    public function raw_edit_story($id, $data)
+    {
+        return $this->edit('story', $id, $data);
+    }
+    
+    public function raw_edit_post($id, $data)
+    {
+        return $this->edit('post', $id, $data);
     }
 }

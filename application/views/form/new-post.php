@@ -5,7 +5,7 @@
 <?php
 echo $errors;
 
-echo form_open('post/post');
+echo form_open('add/post');
 echo (isset($name)) ? '<p>' . $name . '</p>' : '';
 echo '<p>' . $content . '<m id="counter"></m></p>';
 echo (isset($email)) ? '<p>' . $email . '</p>' : '';

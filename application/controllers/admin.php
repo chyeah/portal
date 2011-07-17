@@ -2,14 +2,10 @@
 
 class Admin extends Admin_Controller
 {
-    /**
-     * Array where all view variables are stored.
-     * This will be passed to view file at end.
-     **/
     var $data = array();
     var $pconfig = array();
     
-	function index()
+	public function index()
     {   
         $this->data['title'] = 'Admin panel | ' . $this->config->item('site_name');
         
@@ -69,72 +65,31 @@ class Admin extends Admin_Controller
         $this->load->view('admin/approve-stories', $this->data);
     }
     
-    /**
-     * @param string $what posts | stories
-     **//*
-    function apprgove($what = 'posts')
+    public function edit_post()
     {
         $this->load->model('content');
         
-        $this->data['title'] = 'Approve posts | Admin panel | ' . $this->config->item('site_name');
-        
-        if(!$this->data['records'] = $this->content->show($what, FALSE, 3))
-        {
-            echo "no data";
-        }
-        
-        $this->load->view('admin/approve-' . $what, $this->data);
-    }*/
+        if($this->content->edit_post($this->input->post('id'), $this->input->post('content')))
+            echo nl2br($this->input->post('content'));
+        else echo 'failture.';
+    }
     
-    function _ajax_edit($what = 'posts', $id, $data)
-    {   
+    public function edit_story_content()
+    {
         $this->load->model('content');
         
-        if($this->content->edit($what, $id, $data))
-        {
-            return true;
-        }
-        else
-        {
-            echo '<p id="failture">Something went wrong.</p>';
-            return false;
-        }
+        if($this->content->edit_story_content($this->input->post('id'), $this->input->post('content')))
+            echo nl2br($this->input->post('content'));
+        else echo 'failture';
     }
     
-    function edit_post()
+    public function edit_story_title()
     {
-        $id = $this->input->post('id');
-        $content = $this->input->post('content');
+        $this->load->model('content');
         
-        $a = array('content' => $content);
-        
-        $this->_ajax_edit('posts', $id, $a);
-        
-        echo nl2br($content);
-    }
-    
-    function edit_story()
-    {
-        $id = $this->input->post('id');
-        $content = $this->input->post('content');
-        
-        $a = array('content' => $content);
-        
-        $this->_ajax_edit('stories', $id, $a);
-        
-        echo nl2br($content);
-    }
-    
-    function edit_title()
-    {
-        $id = $this->input->post('id');
-        $title = $this->input->post('title');
-        
-        $a = array('title' => $title);
-        
-        $this->_ajax_edit('story', $id, $a);
-        
-        echo $title;
+        if($this->content->edit_story_title($this->input->post('id'), $this->input->post('title')))
+            echo $this->input->post('title');
+        else echo 'failture';
     }
     
     function i_approve($what, $id)
@@ -143,13 +98,13 @@ class Admin extends Admin_Controller
         
         if($what == 'post')
         {
-            $this->content->edit('posts', $id, array('approved' => 1));
-            echo "true";
+            if($this->content->raw_edit_post($id, array('approved' => 1)))
+                echo "true";
         }
         else if($what == 'story')
         {
-            $this->content->edit('stories', $id, array('approved' => 1));
-            echo "true";
+            if($this->content->raw_edit_story($id, array('approved' => 1)))
+                echo "true";
         }
     }
     
@@ -159,18 +114,42 @@ class Admin extends Admin_Controller
         
         if($what == 'post')
         {
-            $this->content->edit('posts', $id, array('approved' => 2));
-            echo "true";
+            if($this->content->raw_edit_post($id, array('approved' => 2)))
+                echo "true";
         }
         else if($what == 'story')
         {
-            $this->content->edit('stories', $id, array('approved' => 2));
-            echo "true";
+            if($this->content->raw_edit_story($id, array('approved' => 2)))
+                echo "true";
         }
     }
     
     function newspaper()
     {
+        /*$this->load->model('content');
+        $this->data['title'] = 'Newspaper | Admin panel | ' . $this->config->item('site_name');
+        
+        if($this->content->count_unapproved_news() == 0)
+        {
+            $this->_no_data_message();
+        }
+        else
+        {
+            $this->pconfig['base_url'] = site_url('admin/posts');
+            $this->pconfig['total_rows'] = $this->content->count_unapproved_posts();
+            $this->_set_pagination_config();
+            
+            $this->pagination->initialize($this->pconfig);
+            
+            $offset = ($this->uri->segment(3)) ? $this->uri->segment(3) : "0";
+            
+            $this->data['records'] = $this->content->show_posts($this->config->item('per_page'), $offset, 3);
+            $this->data['pagesystem'] = $this->pagination->prxt();
+        }
+        
+        $this->load->view('admin/approve-posts', $this->data);*/
+        
+        
         $this->load->model('content');
         
         $total = $this->content->count_approved_news();
