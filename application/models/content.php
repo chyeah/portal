@@ -26,6 +26,32 @@ class Content extends CI_Model
     }
     
     /**
+     * Content::count_unapproved_posts()
+     * 
+     * Returns number of unapproved posts.
+     * 
+     * @return integer Number of unapproved posts.
+     */
+    public function count_upapproved_posts()
+    {
+        $this->db->where('approved', 3)->from('post');
+        return $this->db->count_all_results();
+    }
+    
+    /**
+     * Content::count_unapproved_stories()
+     * 
+     * Returns number of unapproved stories.
+     * 
+     * @return integer Number of unapproved stories.
+     */
+    public function count_upapproved_stories()
+    {
+        $this->db->where('approved', 3)->from('story');
+        return $this->db->count_all_results();
+    }
+    
+    /**
      * Content::count_approved_stories()
      * 
      * Returns number of approved stories.
