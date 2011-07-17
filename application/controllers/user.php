@@ -6,9 +6,9 @@ class User extends Public_Controller
     
 	function index()
     {
-        if($this->auth_model->is_logged_in())
+        if($this->auth->is_logged_in())
         {
-            $this->profile($this->auth_model->who_am_i());
+            $this->profile($this->auth->who_am_i());
         }
         else
         {
@@ -18,7 +18,7 @@ class User extends Public_Controller
     
     function login()
     {
-        if($this->auth_model->is_logged_in())
+        if($this->auth->is_logged_in())
         {
             redirect('show/posts', 'location');
         }
@@ -37,7 +37,7 @@ class User extends Public_Controller
             }
             else
             {
-                if($this->auth_model->login($this->input->post('username'), $this->input->post('password')))
+                if($this->auth->login($this->input->post('username'), $this->input->post('password')))
                 {
                     $this->session->set_flashdata('success', 'Login successful!');
                     redirect('show/posts', 'location');
@@ -53,7 +53,7 @@ class User extends Public_Controller
     
     function register()
     {
-        if($this->auth_model->is_logged_in())
+        if($this->auth->is_logged_in())
         {
             redirect('show/posts', 'location');
         }
@@ -80,7 +80,7 @@ class User extends Public_Controller
                     'email' => $this->input->post('email')
                 );
                 
-                if($this->auth_model->register($dat))
+                if($this->auth->register($dat))
                 {
                     $this->session->set_flashdata('success', 'Registration successful. You are now logged in');
                     redirect('show/posts', 'location');
@@ -102,14 +102,14 @@ class User extends Public_Controller
     
     function logout()
     {
-        $this->auth_model->logout();
+        $this->auth->logout();
         $this->session->set_flashdata('success', 'You are now logged out!');
         redirect('show/posts', 'location');
     }
     
     function _check_username($username)
     {
-        if($this->auth_model->is_username_taken($username))
+        if($this->auth->is_username_taken($username))
         {
             $this->form_validation->set_message('_check_username', 'The %s is already taken.');
             return FALSE;

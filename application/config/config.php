@@ -357,6 +357,17 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
+
+/*
+|------------------------------------------------------------------------------
+| Native Auto-load
+|------------------------------------------------------------------------------
+|
+| This allows php autoload to work for base controllers (core/MY_- Admin_- and 
+| Public_Controller) and some third-party libraries.
+|
+*/
+
 function __autoload($class)
 {
     if(strpos($class, 'CI_') !== 0)
@@ -364,6 +375,7 @@ function __autoload($class)
         @include_once( APPPATH . 'core/' . $class . EXT);
     }
 }
+
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

@@ -14,6 +14,6 @@ class MY_Controller extends CI_Controller
         
         // Set title, just in case I forget it later.
         $this->data['title']   = $this->config->item('site_name');
-        $this->data['version'] = $this->config->item('app_version');
+        $this->data['version'] = $this->config->item('portal_version');
     }
 }

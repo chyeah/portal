@@ -26,14 +26,14 @@
         <li><?php echo anchor('add/post', 'Add post'); ?></li>
         <li><?php echo anchor('add/story', 'Add story'); ?></li>
         <li><?php echo anchor('show/newspaper', 'News'); ?></li>
-        <?php if(!$this->auth_model->is_logged_in()): ?>
+        <?php if(!$this->auth->is_logged_in()): ?>
         <li><?php echo anchor('user/login', 'Login'); ?></li>
         <li><?php echo anchor('user/register', 'Register'); ?></li>
         <?php else: ?>
         <li><?php echo anchor('#', 'My profile'); ?></li>
         <li><?php echo anchor('user/logout', 'Logout'); ?></li>
         <?php endif; ?>
-        <?php if($this->auth_model->is_admin()): ?>
+        <?php if($this->auth->is_admin()): ?>
         <li><?php echo anchor('admin/index', 'Admin'); ?></li>
         <?php endif; ?>
     </ul>

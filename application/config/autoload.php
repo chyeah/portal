@@ -80,7 +80,7 @@ $autoload['helper'] = array('url', 'form', 'html', 'jquery', 'date');
 |
 */
 
-$autoload['config'] = array('pagination', 'miscellaneous.php');
+$autoload['config'] = array('pagination', 'miscellaneous');
 
 
 /*
@@ -109,21 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('auth_model');
-
-
-/*
-|------------------------------------------------------------------------------
-| Native Auto-load
-|------------------------------------------------------------------------------
-|
-| Nothing to do with config/autoload.php, this allows php autoload to work for
-| base controllers (core/MY_- Admin_- and Public_Controller) and some third-party
-| libraries.
-|
-*/
-
-
+$autoload['model'] = array('auth');
 
 
 /* End of file autoload.php */

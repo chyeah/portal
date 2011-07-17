@@ -6,3 +6,5 @@ $config['num_links'] = 2;
 $config['page_query_string'] = false;
 $config['full_tag_open'] = '<p id="pagination">';
 $config['full_tag_close'] = '</p>';
+$config['prev_link'] = '&larr; Older';
+$config['next_link'] = 'Newer &rarr;';

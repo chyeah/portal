@@ -6,7 +6,7 @@ class Admin_Controller extends MY_Controller
     {
         parent::__construct();
         
-        if(!$this->auth_model->is_admin())
+        if(!$this->auth->is_admin())
         {
             $this->session->set_flashdata('error', 'You do not have permission to access that page!');
             redirect('show/posts');

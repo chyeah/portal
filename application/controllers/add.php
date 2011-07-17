@@ -15,7 +15,7 @@ class Add extends Public_Controller
         
         $this->form_validation->set_rules('content', 'post', 'required|min_length[10]|max_length[350]');
         
-        if(!$this->auth_model->is_logged_in())
+        if(!$this->auth->is_logged_in())
         {
             $this->form_validation->set_rules('name', 'name', 'trim|min_length[3]|max_length[25]|alpha_dash');
             $this->form_validation->set_rules('email', 'e-mail', 'trim|valid_email');
@@ -54,7 +54,7 @@ class Add extends Public_Controller
         $this->form_validation->set_rules('content', 'story', 'required|min_length[10]|max_length[9500]');
 		$this->form_validation->set_rules('title', 'title', 'required|max_length[50]|min_length[3]');
         
-        if(!$this->auth_model->is_logged_in())
+        if(!$this->auth->is_logged_in())
         {
             $this->form_validation->set_rules('name', 'name', 'trim|min_length[3]|max_length[25]|alpha_dash');
             $this->form_validation->set_rules('email', 'e-mail', 'trim|valid_email');
@@ -102,7 +102,7 @@ class Add extends Public_Controller
             }
         }
         
-        if(!$this->auth_model->is_logged_in())
+        if(!$this->auth->is_logged_in())
         {
             $this->data['name'] = form_label('Name', 'name') . form_input('name', set_value('name'), 'id="name"');
             $this->data['email'] = form_label('E-mail', 'email') . form_input('email', set_value('email'), 'id="email"');

@@ -7,6 +7,7 @@ class Admin extends Admin_Controller
      * This will be passed to view file at end.
      **/
     var $data = array();
+    var $pconfig = array();
     
 	function index()
     {   
@@ -16,10 +17,62 @@ class Admin extends Admin_Controller
         $this->load->view('admin/index', $this->data);
     }
     
+    public function posts()
+    {
+        $this->load->model('content');
+        $this->data['title'] = 'Posts | ' . $this->config->item('site_name');
+        
+        if($this->content->count_unapproved_posts() == 0)
+        {
+            $this->_no_data_message();
+        }
+        else
+        {
+            $this->pconfig['base_url'] = site_url('admin/posts');
+            $this->pconfig['total_rows'] = $this->content->count_unapproved_posts();
+            $this->_set_pagination_config();
+            
+            $this->pagination->initialize($this->pconfig);
+            
+            $offset = ($this->uri->segment(3)) ? $this->uri->segment(3) : "0";
+            
+            $this->data['records'] = $this->content->show_posts($this->config->item('per_page'), $offset, 3);
+            $this->data['pagesystem'] = $this->pagination->prxt();
+        }
+        
+        $this->load->view('admin/approve-posts', $this->data);
+    }
+    
+    public function stories()
+    {
+        $this->load->model('content');
+        $this->data['title'] = 'Stories | ' . $this->config->item('site_name');
+        
+        if($this->content->count_unapproved_stories() == 0)
+        {
+            $this->_no_data_message();
+        }
+        else
+        {
+            $this->pconfig['base_url'] = site_url('admin/stories');
+            $this->pconfig['total_rows'] = $this->content->count_unapproved_stories();
+            $this->_set_pagination_config();
+            
+            $this->pagination->initialize($this->pconfig);
+            
+            $offset = ($this->uri->segment(3)) ? $this->uri->segment(3) : "0";
+            
+            $this->data['records'] = $this->content->show_stories($this->config->item('per_page'), $offset, 3);
+            $this->data['pagesystem'] = $this->pagination->prxt();
+        }
+        
+        $this->load->view('admin/approve-stories', $this->data);
+    }
+    
     /**
      * @param string $what posts | stories
-     **/
-    function approve($what = 'posts')
+     **//*
+    function apprgove($what = 'posts')
     {
         $this->load->model('content');
         
@@ -31,7 +84,7 @@ class Admin extends Admin_Controller
         }
         
         $this->load->view('admin/approve-' . $what, $this->data);
-    }
+    }*/
     
     function _ajax_edit($what = 'posts', $id, $data)
     {   
@@ -118,9 +171,9 @@ class Admin extends Admin_Controller
     
     function newspaper()
     {
-        $this->load->model('news');
+        $this->load->model('content');
         
-        $total = $this->news->count_news();
+        $total = $this->content->count_approved_news();
         
         if($total <= 10)
         {
@@ -132,7 +185,7 @@ class Admin extends Admin_Controller
         }
         
         $this->data['title'] = 'Newspaper | Admin panel | ' . $this->config->item('site_name');
-        $this->data['records'] = $this->news->show(FALSE, 'ALL', 10, $offset);
+        $this->data['records'] = $this->content->show_newspaper(10, $offset);
         
         $this->load->view('admin/newspaper', $this->data);
     }
@@ -213,25 +266,39 @@ class Admin extends Admin_Controller
     {
         
     }
+    
+    private function _set_pagination_config()
+    {
+        /* Pagination config. */
+        $this->pconfig['per_page'] = $this->config->item('per_page');
+        $this->pconfig['uri_segment'] = $this->config->item('uri_segment');
+        $this->pconfig['num_links'] = $this->config->item('num_links');
+        $this->pconfig['page_query_string'] = $this->config->item('page_query_string');
+        $this->pconfig['full_tag_open'] = $this->config->item('full_tag_open');
+        $this->pconfig['full_tag_close'] = $this->config->item('full_tag_close');
+        $this->pconfig['prev_link'] = '&larr; Older';
+        $this->pconfig['next_link'] = 'Newer &rarr;';
+    }
+    
+    private function _no_data_message()
+    {
+        $this->data['records'][0] = new no_data;
+        $this->data['pagesystem'] = '';
+        $this->data['what'] = 's';
+    }
 }
 
-/*
-show    index
-show    approve posts
-show    approve stories
-
-post    edit title --- only for storyies ---
-post    edit post
-post    edit story
-        edit (what=post|story) -- 
-post    approve post
-post    approve story
-        approve(what=post|story, id=int)
-post    disapprove post
-post    disapprove story
-        disapprove(what=post|story, id=int)
-post    later post
-post    later story
-
-
-*/
+class no_data
+{
+    public $id = '#';
+    public $title = 'No content';
+    public $content = 'There is no content here yet. But it won\'t stay that way for long.';
+    public $added = '';
+    public $user_id = '#';
+    public $username = 'system';
+    
+    function __construct()
+    {
+        $this->added = date("Y-m-d H:i:s", time());
+    }
+}

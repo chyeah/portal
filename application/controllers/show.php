@@ -20,20 +20,24 @@ class Show extends Public_Controller
         }
         else
         {
+            #$config['base_url'] = site_url('show/posts');
+            #$this->pagination->total_rows = $this->content->count_approved_posts();
             $this->pconfig['base_url'] = site_url('show/posts');
             $this->pconfig['total_rows'] = $this->content->count_approved_posts();
             $this->_set_pagination_config();
+            #$this->load->helper('debug');
             
             $this->pagination->initialize($this->pconfig);
             
             $offset = ($this->uri->segment(3)) ? $this->uri->segment(3) : "0";
             
-            $this->data['records'] = $this->content->show_posts($this->pconfig['per_page'], $offset);
-            #$this->data['records'] = $this->content->show('posts', false, 1, $this->pconfig['per_page'], $offset);
+            $this->data['records'] = $this->content->show_posts($this->config->item('per_page'), $offset);
             $this->data['pagesystem'] = $this->pagination->prxt();
         }
         
         $this->load->view('show/posts', $this->data);
+        
+        #dump($this->config, $offset, $this->pagination);
     }
     
     function stories()
@@ -41,22 +45,22 @@ class Show extends Public_Controller
         $this->load->model('content');
         $this->data['title'] = 'Stories | ' . $this->config->item('site_name');
         
-        if($this->content->count_approved('stories') == 0)
+        if($this->content->count_approved_stories() == 0)
         {
             $this->_no_data_message();
         }
         else
         {
             $this->pconfig['base_url'] = site_url('show/stories');
-            $this->pconfig['total_rows'] = $this->content->count_approved('stories');
+            $this->pconfig['total_rows'] = $this->content->count_approved_stories();
             $this->_set_pagination_config();
             
             $this->pagination->initialize($this->pconfig);
             
             $offset = ($this->uri->segment(3)) ? $this->uri->segment(3) : "0";
             
-            $this->data['records'] = $this->content->show('stories', false, 1, $this->pconfig['per_page'], $offset);
-            $this->data['pagesystem'] = $this->pagination->create_links();
+            $this->data['records'] = $this->content->show_stories($this->pconfig['per_page'], $offset);
+            $this->data['pagesystem'] = $this->pagination->prxt();
             $this->data['what']['s'] = 'story';
         }
         
@@ -70,6 +74,7 @@ class Show extends Public_Controller
             redirect('show/posts');
         }
         
+        $this->load->model('content');
         $this->data['records'] = $this->content->show_post($id);
         //$this->load->helper('debug');
         
@@ -92,7 +97,7 @@ class Show extends Public_Controller
         // Load up the news model.
         $this->load->model('content');
         
-        $this->data['records'] = $this->content->show('stories', (int)$id);
+        $this->data['records'] = $this->content->show_story($id);
         
         // Set the webpage title.
         $this->data['title'] = $this->data['records'][0]->title . ' | ' . $this->config->item('site_name');
@@ -102,11 +107,11 @@ class Show extends Public_Controller
     
     function newspaper()
     {
-        $this->load->model('news');
+        $this->load->model('content');
         
         $this->data['title'] = 'News | ' . $this->config->item('site_name');
         
-        if($this->news->count_active_news() == 0)
+        if($this->content->count_approved_news() == 0)
         {
             $this->_no_data_message();
         }
@@ -114,12 +119,12 @@ class Show extends Public_Controller
         {
             /** Pagination **/
             $this->pconfig['base_url'] = site_url('show/newspaper');
-            $this->pconfig['total_rows'] = $this->news->count_active_news();
+            $this->pconfig['total_rows'] = $this->content->count_approved_news();
             $this->_set_pagination_config();
             $this->pagination->initialize($this->pconfig);
             
-            $this->data['records'] = $this->news->show(FALSE, 1, $this->pconfig['per_page'], $this->uri->segment(3));
-            $this->data['pagesystem'] = $this->pagination->create_links();
+            $this->data['records'] = $this->content->show_newspaper($this->pconfig['per_page'], $this->uri->segment(3));
+            $this->data['pagesystem'] = $this->pagination->prxt();
         }
         
         $this->data['what']['s'] = 'news';
@@ -135,9 +140,9 @@ class Show extends Public_Controller
         }
         
         // Load up the news model.
-        $this->load->model('news');
+        $this->load->model('content');
         
-        $this->data['records'] = $this->news->show((int)$id, 1);
+        $this->data['records'] = $this->content->show_news((int)$id);
         
         // Set the webpage title.
         $this->data['title'] = $this->data['records'][0]->title . ' | ' . $this->config->item('site_name');

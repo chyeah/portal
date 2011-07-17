@@ -26,7 +26,20 @@ endforeach;
 <script>
     $(document).ready(function() {
         var csrf_token_hash = $.cookie('ci_csrf_token');
-        $('.post').editable('<?php echo site_url('admin/edit_post'); ?>',{type:'textarea',event:'dblclick',submit:'OK',cancel:'Cancel',id:'id',name:'content', submitdata:{'ci_csrf_token':csrf_token_hash},data:function(value,settings){var retval=value.replace(/<br[\s\/]?>/gi, '\n');return retval;}});
+        $('.post').editable('<?php echo site_url('admin/edit_post'); ?>',{
+            type:'textarea',
+            event:'dblclick',
+            submit:'OK',
+            cancel:'Cancel',
+            id:'id',
+            name:'content', 
+            submitdata:{
+                'ci_csrf_token':csrf_token_hash
+            },data:function(value,settings){
+                var retval = value.replace(/<br[\s\/]?>/gi, '\n');
+                return retval;
+            }
+        });
         
         $("#contents ul li").mouseover(function() {
             $(this).find("span").show();
