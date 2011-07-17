@@ -9,7 +9,6 @@
         <ul>
             <li>Note: in database you must set permission to 10 to make your user to admin. You must logout and log back in before changes take effect.</li>
         </ul>
-    </li>
 </ul>
 
 ## To Do
@@ -21,4 +20,5 @@
 </ul>
 
 Developed by Kristian Saarela.
+
 Made using <a href="http://codeigniter.com">Codeigniter</a> v2.0.2
