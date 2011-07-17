@@ -1,6 +1,6 @@
 <?php $this->load->view('header'); ?>
 
-<li>
+<article>
 <h2>Tell us Your story</h2>
 <?php
 echo $errors;
@@ -14,6 +14,6 @@ echo '<p>' . $submit . '</p>';
 echo form_close();
 ?>
 
-</li>
+</article>
 
 <?php $this->load->view('footer');

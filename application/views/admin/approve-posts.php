@@ -3,9 +3,9 @@
 $this->load->view('admin/header');
 
 foreach($records as $row):
-    echo "<li>
-    <div class=\"post\" id=\"" . $row->id . "\">" . nl2br($row->content) . "</div>
-    <p>Told by "
+    echo "<article>
+    <p class=\"post\" id=\"" . $row->id . "\">" . nl2br($row->content) . "</p>
+    <details open>Told by "
     
     . anchor_popup('user/profile/' . $row->user_id . '/' . $row->username, $row->username) .
     
@@ -18,7 +18,7 @@ foreach($records as $row):
         
         "</span>
     </p>
-    </li>";
+    </article>";
 endforeach;
 
 ?>

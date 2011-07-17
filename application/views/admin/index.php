@@ -1,7 +1,7 @@
 <?php $this->load->view('admin/header'); ?>
 
-<li>
-    <div>:)</div>
-</li>
+<article>
+    <p>:)</p>
+</article>
 
 <?php $this->load->view('footer'); ?>

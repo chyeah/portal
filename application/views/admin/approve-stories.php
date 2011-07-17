@@ -3,14 +3,14 @@
 $this->load->view('admin/header');
 
 foreach($records as $row):
-    echo "<li>
+    echo "<article>
     <h2 class=\"title\" id=\"" . $row->id . "\">" . $row->title . "</h2>
-    <div class=\"story\" id=\"" . $row->id . "\">"
+    <p class=\"story\" id=\"" . $row->id . "\">"
     
     . nl2br($row->content) .
     
-    "</div>
-    <p>Told by "
+    "</p>
+    <details open>Told by "
     
     . anchor_popup('user/profile/' . $row->user_id . '/' . $row->username, $row->username) .
     
@@ -22,8 +22,8 @@ foreach($records as $row):
         . anchor('admin/later/story/' . $row->id, img('img/round_delete.png')) .
         
         "</span>
-    </p>
-    </li>";
+    </details>
+    </article>";
 endforeach;
 ?>
 

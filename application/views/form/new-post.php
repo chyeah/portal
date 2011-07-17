@@ -1,7 +1,7 @@
 <?php $this->load->view('header'); ?>
 
-<li>
-<h2>Tell us a post</h2>
+<article>
+<h2>Add new post</h2>
 <?php
 echo $errors;
 
@@ -13,6 +13,6 @@ echo '<p>' . $submit . '</p>';
 echo form_close();
 ?>
 
-</li>
+</article>
 
 <?php $this->load->view('footer');

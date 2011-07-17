@@ -38,7 +38,7 @@ body > div {
     margin: 20px 0;
 }
 
-#content ul, #sidebar {
+#content, #sidebar {
     border-bottom: 1px solid #363631;
     border-right: 1px solid #363631;
     border-top: 1px solid #000000;
@@ -46,11 +46,11 @@ body > div {
     border-radius: 10px;
 }
 
-#content ul li, #sidebar p {
+#content article, #sidebar p {
     background-color: #191814;
 }
 
-#content ul li:first-child, #content ul li:last-child, #content ul li,
+#content article:first-child, #content article:last-child, #content article,
 #sidebar p:first-child, #sidebar p:last-child, #sidebar p {
     padding: 10px;
     border-top: 1px solid #363631;
@@ -59,12 +59,12 @@ body > div {
     border-right: 1px solid #000000;
 }
 
-#content ul li:first-child, #sidebar p:first-child {
+#content article:first-child, #sidebar p:first-child {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
 
-#content ul li:last-child, #sidebar p:last-child {
+#content article:last-child, #sidebar p:last-child {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
@@ -108,3 +108,23 @@ a {
 }
 
 /** hovers etc. **/
+
+
+/** forms **/
+
+form label {
+    display: inline-block;
+    width: 80px;
+    vertical-align: middle;
+    text-align: right;
+}
+
+form input, form textarea {
+    margin: 5px;
+}
+
+form textarea {
+    width: 300px!important;
+    height: 100px;
+    float: none!important;
+}

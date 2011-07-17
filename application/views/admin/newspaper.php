@@ -5,7 +5,7 @@ $this->load->view('admin/header');
 ?>
 
 <p class="info" id="create_news">Create new news</p>
-<li id="news_form">
+<article id="news_form">
 <?php
 echo validation_errors();
 echo form_open('admin/create_news');
@@ -14,20 +14,20 @@ echo "<p>" . form_label('News') . form_textarea('content', set_value('content'),
 echo "<p>" . form_submit('submit', 'Publish') . "</p>";
 echo form_close();
 ?>
-</li>
+</article>
 <?php
 
 foreach($records as $row):
-    echo "<li><h2 class=\"title\" id=\"" . $row->id . "\">" . $row->title . "</h2>
-    <div class=\"news\" id=\"" . $row->id . "\">". nl2br($row->content) . "</div>
-    <p>Published by "
+    echo "<article><h2 class=\"title\" id=\"" . $row->id . "\">" . $row->title . "</h2>
+    <p class=\"news\" id=\"" . $row->id . "\">". nl2br($row->content) . "</p>
+    <details open>Published by "
     
     . anchor_popup('user/profile/' . $row->user_id . '/' . $row->username, $row->username) .
     
     " at " . $row->added . " (" . timespan(human_to_unix($row->added), now()) . " ago)
     <span>";
     
-    if($row->active == 1)
+    if($row->approved == 1)
     {
         echo anchor('admin/delete_news/' . $row->id, img('img/round_delete.png'));
     }
@@ -37,8 +37,8 @@ foreach($records as $row):
     }
     
     echo "</span>
-    </p>
-    </li>";
+    </details>
+    </article>";
 endforeach;
 ?>
 

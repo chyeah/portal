@@ -1,6 +1,6 @@
 <?php $this->load->view('header'); ?>
 
-<li>
+<article>
 
 <?php
 $this->load->helper('form');
@@ -12,6 +12,6 @@ echo '<p>' . form_submit('login', 'Login') . '</p>';
 echo form_close();
 ?>
 
-</li>
+</article>
 
 <?php $this->load->view('footer');
