@@ -6,9 +6,9 @@
 echo $errors;
 
 echo form_open('add/story');
-echo (isset($name)) ? '<p>' . $name . '</p>' : '';
 echo '<p>' . $story_title . '</p>';
-echo '<p>' . $content . '</p>';
+echo '<p>' . $post . '</p>';
+echo (isset($name)) ? '<p>' . $name . '</p>' : '';
 echo (isset($email)) ? '<p>' . $email . '</p>' : '';
 echo '<p>' . $submit . '</p>';
 echo form_close();

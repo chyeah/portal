@@ -13,7 +13,7 @@ class Add extends Public_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('content', 'post', 'required|min_length[10]|max_length[350]');
+        $this->form_validation->set_rules('post', 'post', 'required|min_length[10]|max_length[350]');
         
         if(!$this->auth->is_logged_in())
         {
@@ -31,7 +31,7 @@ class Add extends Public_Controller
         {
             $this->load->model('content');
             
-            if($this->content->add_post($this->input->post('content')))
+            if($this->content->add_post($this->input->post('post')))
             {
                 $this->session->set_flashdata('success', 'Post added.');
                 redirect('show/posts', 'location');
@@ -47,7 +47,7 @@ class Add extends Public_Controller
     {
         $this->load->library('form_validation');
         
-        $this->form_validation->set_rules('content', 'story', 'required|min_length[10]|max_length[9500]');
+        $this->form_validation->set_rules('post', 'story', 'required|min_length[10]|max_length[9500]');
 		$this->form_validation->set_rules('title', 'title', 'required|max_length[50]|min_length[3]');
         
         if(!$this->auth->is_logged_in())
@@ -66,7 +66,7 @@ class Add extends Public_Controller
         {
             $this->load->model('content');
             
-            if($this->content->add_story($this->input->post('title'), $this->input->post('content')))
+            if($this->content->add_story($this->input->post('title'), $this->input->post('post')))
             {
                 $this->session->set_flashdata('success', 'Story added.');
                 redirect('show/posts', 'location');
@@ -83,7 +83,7 @@ class Add extends Public_Controller
         $this->load->helper('form');
         
         $this->data['errors'] = validation_errors();
-        $this->data['content'] = form_label(($story) ? 'Story' : 'Post', 'content') . form_textarea('content', set_value('content'), 'id="content"');
+        $this->data['post'] = form_label(($story) ? 'Story' : 'Post', 'post') . form_textarea('post', set_value('post'), 'id="post" contenteditable');
         
         if(!empty($dat))
         {

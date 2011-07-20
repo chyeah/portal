@@ -142,7 +142,15 @@ form input, form textarea {
 }
 
 form textarea {
-    width: 300px!important;
+    width: 300px;
     height: 100px;
-    float: none!important;
+    float: none;
+    overflow: auto;
+}
+
+form m {
+    vertical-align: bottom;
+    position: relative;
+    bottom: 5px;
+    left: 0;
 }

@@ -9,14 +9,16 @@
     " . link_tag('css/main.css') . "
     " . check_flashdata('fadeout', 3000);
     ?>
-<script type="text/javascript" language="javascript" src="<?php echo base_url(); ?>js/jquery-1.5.2.min.js"></script>
+    <script type="text/javascript" language="javascript" src="<?php echo base_url(); ?>js/jquery-1.5.2.min.js"></script>
+    <script type="text/javascript" language="javascript" src="<?php echo base_url(); ?>js/autoresize.jquery.min.js"></script>
     <script>
     $(document).ready(function() {
-        $('#counter').html($('#content').val().length + '/350 characters');
-       
-        $('#content').keyup(function() {
+        // textarea counter
+        $('#counter').html($('#post').val().length + '/350 characters');
+        $('#post').keyup(function() {
             $('#counter').html($(this).val().length + '/350 characters');
         });
+        $('#post').autoResize({extraSpace:0});
     });
     </script>
 </head>
