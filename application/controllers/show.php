@@ -14,18 +14,17 @@ class Show extends Public_Controller
         $this->load->model('content');
         $this->data['title'] = 'Posts | ' . $this->config->item('site_name');
         
+        $this->data['side_nav'] = array(anchor('show/moderate', 'Moderate'));
+        
         if($this->content->count_approved_posts() == 0)
         {
             $this->_no_data_message();
         }
         else
         {
-            #$config['base_url'] = site_url('show/posts');
-            #$this->pagination->total_rows = $this->content->count_approved_posts();
             $this->pconfig['base_url'] = site_url('show/posts');
             $this->pconfig['total_rows'] = $this->content->count_approved_posts();
             $this->_set_pagination_config();
-            #$this->load->helper('debug');
             
             $this->pagination->initialize($this->pconfig);
             
@@ -36,8 +35,6 @@ class Show extends Public_Controller
         }
         
         $this->load->view('show/posts', $this->data);
-        
-        #dump($this->config, $offset, $this->pagination);
     }
     
     function stories()
@@ -76,10 +73,6 @@ class Show extends Public_Controller
         
         $this->load->model('content');
         $this->data['records'] = $this->content->show_post($id);
-        //$this->load->helper('debug');
-        
-        //dump($this->data['records']);
-        //$this->data['records'] = $this->content->show('posts', (int)$id);
         
         // Set the webpage title.
         $this->data['title'] = 'post | ' . $this->config->item('site_name');
